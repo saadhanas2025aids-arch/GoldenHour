@@ -1,19 +1,28 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
   
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+const [formdata, setFormdata] = useState({
+  email: "",
+  password: ""
+})
   const [message, setMessage] = useState('')
+  const navigate=useNavigate()
+  function handleChange(e) {
+  setFormdata({
+    ...formdata,
+    [e.target.name]: e.target.value
+  })
+}
+ function handleSubmit(e) {
+  e.preventDefault()
 
-  
-  function handleSubmit(e) {
-    e.preventDefault()
+  setMessage('Login form submitted successfully!')
 
-    setMessage('Login form submitted successfully!')
-
-    console.log('Email:', email)
-  }
+  console.log("Login details:", formdata)
+  navigate('/dashboard', { state: formdata })
+}
 
   return (
     <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
@@ -50,8 +59,8 @@ function Login() {
             name="email"
             placeholder="Enter your email"
             required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formdata.email}
+            onChange={handleChange}
             className="w-full border border-gray-300 rounded-lg p-3 mb-5 focus:outline-none focus:ring-2 focus:ring-amber-400"
           />
 
@@ -64,8 +73,8 @@ function Login() {
             name="password"
             placeholder="Enter your password"
             required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={formdata.password}
+            onChange={handleChange}
             className="w-full border border-gray-300 rounded-lg p-3 mb-6 focus:outline-none focus:ring-2 focus:ring-amber-400"
           />
 
@@ -75,7 +84,12 @@ function Login() {
           >
             Login
           </button>
-
+<button
+  type="button"
+  onClick={() => navigate('/register')}
+>
+  Register your Organisation
+</button>
         </form>
 
         

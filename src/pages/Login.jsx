@@ -1,27 +1,37 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-
+import { useLocation, useNavigate } from 'react-router-dom'
 function Login() {
   
-const [formdata, setFormdata] = useState({
-  email: "",
+const location = useLocation()
+const navigate = useNavigate()
+
+const registerdata = location.state
+
+const [logindata, setlogindata] = useState({
+  name: "",
   password: ""
 })
-  const [message, setMessage] = useState('')
-  const navigate=useNavigate()
-  function handleChange(e) {
-  setFormdata({
-    ...formdata,
+function handleChange(e) {
+  setlogindata({
+    ...logindata,
     [e.target.name]: e.target.value
   })
 }
- function handleSubmit(e) {
+
+function handleSubmit(e) {
   e.preventDefault()
 
-  setMessage('Login form submitted successfully!')
-
-  console.log("Login details:", formdata)
-  navigate('/dashboard', { state: formdata })
+  if (
+    registerdata &&
+    logindata.name === registerdata.name &&
+    logindata.password === registerdata.password
+  ) {
+    alert("Successful Login")
+    navigate("/dashboard")
+  }
+  else {
+    alert("Invalid Credentials")
+  }
 }
 
   return (
@@ -51,15 +61,15 @@ const [formdata, setFormdata] = useState({
         <form onSubmit={handleSubmit}>
 
           <label className="block font-medium text-gray-700 mb-2">
-            Email Address
+            Name
           </label>
 
           <input
-            type="email"
-            name="email"
-            placeholder="Enter your email"
+            type="text"
+            name="name"
+            placeholder="Enter your name"
             required
-            value={formdata.email}
+            value={logindata.name}
             onChange={handleChange}
             className="w-full border border-gray-300 rounded-lg p-3 mb-5 focus:outline-none focus:ring-2 focus:ring-amber-400"
           />
@@ -73,7 +83,7 @@ const [formdata, setFormdata] = useState({
             name="password"
             placeholder="Enter your password"
             required
-            value={formdata.password}
+            value={logindata.password}
             onChange={handleChange}
             className="w-full border border-gray-300 rounded-lg p-3 mb-6 focus:outline-none focus:ring-2 focus:ring-amber-400"
           />
@@ -91,14 +101,6 @@ const [formdata, setFormdata] = useState({
   Register your Organisation
 </button>
         </form>
-
-        
-        {message && (
-          <p className="text-green-600 text-center mt-5">
-            {message}
-          </p>
-        )}
-
         
         <div className="border-t mt-8 pt-5">
           <p className="text-sm text-gray-500 text-center mb-3">

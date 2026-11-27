@@ -1,7 +1,8 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 
-import { hospitalRegisterSchema } from "../components/formschema/registerSchema.js";
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { hospitalRegisterSchema } from '../components/formschema/registerSchema'
+
 function HospitalRegister() {
 
   const {
@@ -10,43 +11,74 @@ function HospitalRegister() {
     formState: { errors }
   } = useForm({
     resolver: zodResolver(hospitalRegisterSchema)
-  });
+  })
 
   function onSubmit(data) {
-    console.log("Hospital Registration Details :", data);
+    console.log("Hospital Registration:", data)
+    alert("Hospital registration submitted successfully!")
   }
 
   return (
-    <div>
-      <h1>Hospital Registration</h1>
+    <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg">
 
-        <label>Hospital Name</label>
+        <h1 className="text-2xl font-bold mb-6">
+          Hospital Registration
+        </h1>
 
-        <input
-          type="text"
-          {...register("hospitalName")}
-        />
+        <form onSubmit={handleSubmit(onSubmit)}>
 
-        <p>{errors.hospitalName?.message}</p>
+          <div className="mb-5">
+            <label className="block mb-2 font-medium">
+              Hospital Name
+            </label>
 
-        <label>Email</label>
+            <input
+              type="text"
+              placeholder="Enter hospital name"
+              {...register("hospitalName")}
+              className="w-full border border-gray-300 rounded-lg p-3"
+            />
 
-        <input
-          type="email"
-          {...register("email")}
-        />
+            {errors.hospitalName && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.hospitalName.message}
+              </p>
+            )}
+          </div>
 
-        <p>{errors.email?.message}</p>
+          <div className="mb-5">
+            <label className="block mb-2 font-medium">
+              Official Email
+            </label>
 
-        <button type="submit">
-          Register
-        </button>
+            <input
+              type="email"
+              placeholder="Enter official email"
+              {...register("email")}
+              className="w-full border border-gray-300 rounded-lg p-3"
+            />
 
-      </form>
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.email.message}
+              </p>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-slate-900 text-white p-3 rounded-lg"
+          >
+            Submit Registration
+          </button>
+
+        </form>
+
+      </div>
     </div>
-  );
+  )
 }
 
-export default HospitalRegister;
+export default HospitalRegister

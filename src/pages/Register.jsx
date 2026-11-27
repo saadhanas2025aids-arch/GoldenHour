@@ -1,7 +1,7 @@
+
 import { useNavigate } from 'react-router-dom'
 
 function Register() {
-
   const navigate = useNavigate()
 
   return (
@@ -21,7 +21,6 @@ function Register() {
       >
         Ambulance Service
       </button>
-
     </div>
   )
 }

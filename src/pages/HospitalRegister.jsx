@@ -13,7 +13,7 @@ function HospitalRegister() {
   });
 
   function onSubmit(data) {
-    console.log("Hospital Registration Details:", data);
+    console.log("Hospital Registration Details :", data);
   }
 
   return (

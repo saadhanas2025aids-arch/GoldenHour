@@ -10,7 +10,7 @@ function Register() {
 
       <button
         type="button"
-        onClick={() => navigate('/hospital-register')}
+        onClick={() => navigate( '/hospital-register')}
       >
         Hospital
       </button>
